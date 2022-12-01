@@ -1,0 +1,11 @@
+{
+  "name": "yehwan-kim",
+  "version": "1.0.0",
+  "dependencies": {
+    "firebase": "latest"
+  },
+  "devDependencies": {
+    "webpack": "latest",
+    "webpack-cli": "latest"
+  }
+}
