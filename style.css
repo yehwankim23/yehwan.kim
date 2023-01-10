@@ -1,0 +1,110 @@
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background-color: #222;
+  font-family: "Noto Sans KR", sans-serif;
+  word-break: keep-all;
+}
+
+div {
+  padding: 24px 0 0 24px;
+  font-size: 24px;
+}
+
+#container {
+  margin: auto;
+  width: 100vmin;
+  min-height: 101vh;
+  padding: 0;
+}
+
+header {
+  padding: 32px 0 0 32px;
+}
+
+h1 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  font-size: 32px;
+  font-weight: normal;
+}
+
+#parent {
+  padding: 0 24px 0 8px;
+}
+
+span {
+  color: #ddd;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+span:hover {
+  color: #888;
+}
+
+.collapse > span {
+  color: #888;
+}
+
+.collapse > span:hover {
+  color: #ddd;
+}
+
+.collapse > div {
+  display: none;
+}
+
+a {
+  color: #ddd;
+}
+
+a:hover {
+  color: #88f;
+}
+
+p {
+  margin-block-start: 8px;
+  margin-block-end: 0;
+  font-size: 16px;
+  color: #888;
+}
+
+footer {
+  padding: 64px 0 96px 32px;
+}
+
+footer > a {
+  font-size: 16px;
+  color: #888;
+  text-decoration: none;
+}
+
+footer > a:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: light;
+  }
+
+  body {
+    background-color: #ddd;
+  }
+
+  span {
+    color: #222;
+  }
+
+  .collapse > span:hover {
+    color: #222;
+  }
+
+  a {
+    color: #222;
+  }
+}
