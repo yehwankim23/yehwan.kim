@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, doc, getDocs, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const loading = document.querySelector("#loading");
@@ -37,6 +37,17 @@ if (new Date().getMonth() === 1 && new Date().getDate() === 3) {
 }
 
 const firestore = getFirestore(firebaseApp);
+
+const query = window.location.search.slice(1).toLowerCase();
+
+if (query) {
+  const shortcut = await getDoc(doc(firestore, "shortcuts", query));
+
+  if (shortcut.exists()) {
+    window.location.replace(shortcut.data()["url"]);
+  }
+}
+
 const storage = getStorage();
 
 const contact = document.querySelector("#contact");
