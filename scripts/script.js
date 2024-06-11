@@ -41,11 +41,11 @@ const storage = getStorage();
 
 const contact = document.querySelector("#contact");
 
-(await getDocs(collection(firestore, "contact"))).forEach((website) => {
-  getDownloadURL(ref(storage, `contact/${website.id}.png`)).then((image) => {
+(await getDocs(collection(firestore, "links"))).forEach((link) => {
+  getDownloadURL(ref(storage, `icons/${link.id}.png`)).then((icon) => {
     contact.innerHTML += `
-      <a href="${website.data()["url"]}" target="_blank">
-        <img src="${image}" />
+      <a href="${link.data()["url"]}" target="_blank">
+        <img src="${icon}" />
       </a>
     `;
   });
