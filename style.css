@@ -71,6 +71,10 @@ img {
   width: 90vmin;
 }
 
+.h-10 {
+  height: 10vmin;
+}
+
 .fs-2 {
   font-size: 2vmin;
 }
