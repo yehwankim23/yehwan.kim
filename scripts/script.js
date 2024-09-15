@@ -40,12 +40,12 @@ async function main() {
   const query = window.location.search.slice(1).toLowerCase();
 
   if (query) {
-    const shortcut = await getDoc(doc(firestore, "shortcuts", query));
+    window.location.replace(
+      (await getDoc(doc(firestore, "urls", "shortcuts"))).data()["shortcuts"][query] ??
+        "https://yehwan.kim"
+    );
 
-    if (shortcut.exists()) {
-      window.location.replace(shortcut.data()["url"]);
-      return;
-    }
+    return;
   }
 
   const projects = document.querySelector("#projects");
@@ -100,15 +100,17 @@ async function main() {
   const storage = getStorage();
   const contact = document.querySelector("#contact");
 
-  (await getDocs(collection(firestore, "links"))).forEach((link) => {
-    getDownloadURL(ref(storage, `icons/${link.id}.png`)).then((icon) => {
+  for (const [name, url] of Object.entries(
+    (await getDoc(doc(firestore, "urls", "links"))).data()["links"]
+  )) {
+    getDownloadURL(ref(storage, `icons/${name}.png`)).then((icon) => {
       contact.innerHTML += `
-        <a class="h-10" href="${link.data()["url"]}" target="_blank">
+        <a class="h-10" href="${url}" target="_blank">
           <img src="${icon}" />
         </a>
       `;
     });
-  });
+  }
 
   while (contact.innerHTML === "" || projects.innerHTML === "") {
     await new Promise((resolve) => {
