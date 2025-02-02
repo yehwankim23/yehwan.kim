@@ -33,7 +33,9 @@ async function main() {
   });
 
   if (new Date().getMonth() === 1 && new Date().getDate() === 3) {
-    document.querySelector("#title").innerText = "yehwan.kim 🎉🥳";
+    document.querySelector(
+      "#title"
+    ).innerHTML = `<a href="https://decimal-age.pages.dev" target="_blank">yehwan.kim 🥳🎉</a>`;
   }
 
   const firestore = getFirestore(firebaseApp);
