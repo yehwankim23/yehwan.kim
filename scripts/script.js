@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import axios from "axios";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, doc, getDoc, collection, getDocs } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -11,15 +12,14 @@ async function main() {
     loading.innerText = `Loading${".".repeat((count++ % 3) + 1)}`;
   }, 200);
 
-  const firebaseApp = initializeApp({
-    apiKey: "AIzaSyCnFtJWcURrUl7093um9kY2j4x0p_SV6mY",
-    authDomain: "yehwan-kim.firebaseapp.com",
-    projectId: "yehwan-kim",
-    storageBucket: "yehwan-kim.appspot.com",
-    messagingSenderId: "398883958426",
-    appId: "1:398883958426:web:816204c99a5db2c278b923",
-    measurementId: "G-SEK11VXWZT",
-  });
+  const firebaseApp = initializeApp(
+    (
+      await axios({
+        method: "get",
+        url: "https://tokens.yehwan.kim/tokens",
+      })
+    ).data
+  );
 
   const analytics = getAnalytics(firebaseApp);
   const language = navigator.language.startsWith("ko") ? "ko" : "en";
