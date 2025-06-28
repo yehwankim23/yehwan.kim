@@ -11,13 +11,13 @@ async function main() {
   }, 200);
 
   const firebaseApp = initializeApp({
-    apiKey: "AIzaSyCnFtJWcURrUl7093um9kY2j4x0p_SV6mY",
+    apiKey: "AIzaSyCE-HOSObKRvpqqNvUfiDpKVCeTm_60c3o",
     authDomain: "yehwan-kim.firebaseapp.com",
     projectId: "yehwan-kim",
     storageBucket: "yehwan-kim.appspot.com",
     messagingSenderId: "398883958426",
-    appId: "1:398883958426:web:816204c99a5db2c278b923",
-    measurementId: "G-SEK11VXWZT",
+    appId: "1:398883958426:web:c3c938129c89390c78b923",
+    measurementId: "G-6SSGR53VNB",
   });
 
   const analytics = getAnalytics(firebaseApp);
