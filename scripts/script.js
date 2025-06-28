@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, doc, getDoc, collection, getDocs } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 async function main() {
   const loading = document.querySelector("#loading");
@@ -43,7 +42,7 @@ async function main() {
 
   if (query) {
     window.location.replace(
-      (await getDoc(doc(firestore, "urls", "shortcuts"))).data()["shortcuts"][query] ??
+      (await getDoc(doc(firestore, "urls", "shortcuts"))).data().shortcuts[query] ??
         "https://yehwan.kim"
     );
 
@@ -54,12 +53,12 @@ async function main() {
 
   (await getDoc(doc(firestore, "projects", "years")))
     .data()
-    ["years"].toSorted()
+    .years.toSorted()
     .toReversed()
     .forEach(async (year) => {
       (await getDoc(doc(firestore, "projects", year)))
         .data()
-        ["months"].toSorted()
+        .months.toSorted()
         .toReversed()
         .forEach(async (month) => {
           let firstProject = true;
@@ -79,18 +78,24 @@ async function main() {
             }
 
             const data = project.data();
-            const url = data["url"];
+            const url = data.url;
             const tag = url ? "a" : "div";
-            const name = data["name"][language];
+            const github = data.github;
 
             innerHTML += `
               <div class="w-75 ai-fs">
-                <${tag} class="fs-6" ${url ? `href="${url}" target="_blank"` : ""}>${name}</${tag}>
-                <div class="mt-5">${data["description"][language]}</div>
-                <a class="mt-5" href="https://github.com/yehwankim23/${project.id}" target="_blank">
-                  ${language === "ko" ? "깃허브" : "GitHub"}
-                </a>
-                <div class="mt-5 fs-2 c-gray">${data["tag"].sort().join(", ")}</div>
+                <${tag} class="fs-6" ${url ? `href="${url}" target="_blank"` : ""}>
+                  ${data.name[language]}
+                </${tag}>
+                <div class="mt-5">${data.description[language]}</div>
+                ${
+                  github
+                    ? `<a class="mt-5" href="${github}" target="_blank">
+                        ${language === "ko" ? "깃허브" : "GitHub"}
+                      </a>`
+                    : ""
+                }
+                <div class="mt-5 fs-2 c-gray">${data.tag.sort().join(", ")}</div>
               </div>
             `;
 
@@ -99,19 +104,16 @@ async function main() {
         });
     });
 
-  const storage = getStorage();
   const contact = document.querySelector("#contact");
 
   for (const [name, url] of Object.entries(
-    (await getDoc(doc(firestore, "urls", "links"))).data()["links"]
+    (await getDoc(doc(firestore, "urls", "links"))).data().links
   )) {
-    getDownloadURL(ref(storage, `icons/${name}.png`)).then((icon) => {
-      contact.innerHTML += `
-        <a class="h-10" href="${url}" target="_blank">
-          <img src="${icon}" />
-        </a>
-      `;
-    });
+    contact.innerHTML += `
+      <a class="h-10" href="${url}" target="_blank">
+        <img src="images/${name}.png" />
+      </a>
+    `;
   }
 
   while (contact.innerHTML === "" || projects.innerHTML === "") {
