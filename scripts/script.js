@@ -38,11 +38,11 @@ async function main() {
   }
 
   const firestore = getFirestore(firebaseApp);
-  const query = window.location.search.slice(1).toLowerCase();
+  const hash = window.location.hash[1]?.toLowerCase();
 
-  if (query) {
+  if (hash) {
     window.location.replace(
-      (await getDoc(doc(firestore, "urls", "shortcuts"))).data().shortcuts[query] ??
+      (await getDoc(doc(firestore, "urls", "shortcuts"))).data().shortcuts[hash] ??
         "https://yehwan.kim"
     );
 
