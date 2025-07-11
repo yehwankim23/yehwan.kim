@@ -75,22 +75,6 @@ img {
   height: 10vmin;
 }
 
-.fs-2 {
-  font-size: 2vmin;
-}
-
-.fs-6 {
-  font-size: 6vmin;
-}
-
-.fs-8 {
-  font-size: 8vmin;
-}
-
-.c-gray {
-  color: #888;
-}
-
 .fd-r {
   flex-direction: row;
 }
@@ -105,4 +89,20 @@ img {
 
 .jc-sa {
   justify-content: space-around;
+}
+
+.fs-2 {
+  font-size: 2vmin;
+}
+
+.fs-6 {
+  font-size: 6vmin;
+}
+
+.fs-8 {
+  font-size: 8vmin;
+}
+
+.c-gray {
+  color: #888;
 }

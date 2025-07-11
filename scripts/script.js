@@ -1,3 +1,4 @@
+import axios from "axios";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, doc, getDoc, collection, getDocs } from "firebase/firestore";
@@ -10,15 +11,9 @@ async function main() {
     loading.innerText = `Loading${".".repeat((count++ % 3) + 1)}`;
   }, 200);
 
-  const firebaseApp = initializeApp({
-    apiKey: "AIzaSyCnFtJWcURrUl7093um9kY2j4x0p_SV6mY",
-    authDomain: "yehwan-kim.firebaseapp.com",
-    projectId: "yehwan-kim",
-    storageBucket: "yehwan-kim.appspot.com",
-    messagingSenderId: "398883958426",
-    appId: "1:398883958426:web:816204c99a5db2c278b923",
-    measurementId: "G-SEK11VXWZT",
-  });
+  const firebaseApp = initializeApp(
+    (await axios.get("https://tokens.yehwan.kim/tokens")).data.firebase
+  );
 
   const analytics = getAnalytics(firebaseApp);
   const language = navigator.language.startsWith("ko") ? "ko" : "en";
@@ -38,11 +33,11 @@ async function main() {
   }
 
   const firestore = getFirestore(firebaseApp);
-  const query = window.location.search.slice(1).toLowerCase();
+  const hash = window.location.hash[1]?.toLowerCase();
 
-  if (query) {
+  if (hash) {
     window.location.replace(
-      (await getDoc(doc(firestore, "urls", "shortcuts"))).data().shortcuts[query] ??
+      (await getDoc(doc(firestore, "urls", "shortcuts"))).data().shortcuts[hash] ??
         "https://yehwan.kim"
     );
 
