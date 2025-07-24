@@ -44,16 +44,29 @@ async function main() {
     return;
   }
 
+  const links = document.querySelector("#links");
+
+  (await getDoc(doc(firestore, "urls", "links")))
+    .data()
+    .links.sort()
+    .forEach((link) => {
+      links.innerHTML += `
+        <a class="h-10" href="${link}" target="_blank">
+          <img src="images/${link.split("/")[2]}.png" />
+        </a>
+      `;
+    });
+
   const projects = document.querySelector("#projects");
 
   (await getDoc(doc(firestore, "projects", "years")))
     .data()
-    .years.toSorted()
+    .years.sort()
     .toReversed()
     .forEach(async (year) => {
       (await getDoc(doc(firestore, "projects", year)))
         .data()
-        .months.toSorted()
+        .months.sort()
         .toReversed()
         .forEach(async (month) => {
           let firstProject = true;
@@ -99,19 +112,7 @@ async function main() {
         });
     });
 
-  const contact = document.querySelector("#contact");
-
-  for (const [name, url] of Object.entries(
-    (await getDoc(doc(firestore, "urls", "links"))).data().links
-  )) {
-    contact.innerHTML += `
-      <a class="h-10" href="${url}" target="_blank">
-        <img src="images/${name}.png" />
-      </a>
-    `;
-  }
-
-  while (contact.innerHTML === "" || projects.innerHTML === "") {
+  while (links.innerHTML === "" || projects.innerHTML === "") {
     await new Promise((resolve) => {
       setTimeout(resolve, 1000);
     });
@@ -119,7 +120,7 @@ async function main() {
 
   clearInterval(intervalId);
   loading.classList.add("d-n");
-  contact.classList.remove("d-n");
+  links.classList.remove("d-n");
 }
 
 await main();

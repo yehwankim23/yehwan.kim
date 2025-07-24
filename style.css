@@ -87,8 +87,8 @@ img {
   justify-content: flex-end;
 }
 
-.jc-sa {
-  justify-content: space-around;
+.jc-se {
+  justify-content: space-evenly;
 }
 
 .fs-2 {
