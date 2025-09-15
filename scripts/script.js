@@ -96,13 +96,7 @@ async function main() {
                   ${data.name[language]}
                 </${tag}>
                 <div class="mt-5">${data.description[language]}</div>
-                ${
-                  github
-                    ? `<a class="mt-5" href="${github}" target="_blank">
-                        ${language === "ko" ? "깃허브" : "GitHub"}
-                      </a>`
-                    : ""
-                }
+                ${github ? `<a class="mt-5" href="${github}" target="_blank">GitHub</a>` : ""}
                 <div class="mt-5 fs-2 c-gray">${data.tag.sort().join(", ")}</div>
               </div>
             `;
